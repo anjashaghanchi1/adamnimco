@@ -50,13 +50,15 @@ function HomePage() {
         <div className="relative container mx-auto px-4 lg:px-6 py-16 md:py-24 lg:py-32">
           <div className="grid lg:grid-cols-[auto_1fr] items-center gap-8 lg:gap-12">
             <div className="flex justify-center lg:justify-start animate-pop-in">
-              <img
-                src={logo}
-                alt="Adam Nimco logo since 1939"
-                width={320}
-                height={420}
-                className="h-48 md:h-64 lg:h-80 w-auto object-contain drop-shadow-2xl"
-              />
+              <div className="bg-white rounded-3xl p-6 md:p-8 shadow-2xl ring-1 ring-black/5">
+                <img
+                  src={logo}
+                  alt="Adam Nimco logo since 1939"
+                  width={320}
+                  height={420}
+                  className="h-48 md:h-64 lg:h-72 w-auto object-contain"
+                />
+              </div>
             </div>
             <div className="text-white text-center lg:text-left">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent text-accent-foreground text-xs font-bold mb-4 animate-pop-in">
