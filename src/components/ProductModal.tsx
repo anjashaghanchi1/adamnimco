@@ -30,9 +30,9 @@ export function ProductModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 overflow-hidden gap-0">
+      <DialogContent className="max-w-2xl p-0 gap-0 max-h-[92vh] overflow-y-auto sm:rounded-lg">
         <div className="grid md:grid-cols-2">
-          <div className="aspect-square bg-muted overflow-hidden">
+          <div className="aspect-[4/3] sm:aspect-square bg-muted overflow-hidden max-h-[28vh] md:max-h-none">
             <img
               src={product.image}
               alt={product.name}
@@ -41,7 +41,7 @@ export function ProductModal({
               height={800}
             />
           </div>
-          <div className="p-5 md:p-6 flex flex-col">
+          <div className="p-4 md:p-6 flex flex-col">
             <DialogHeader className="text-left space-y-2">
               <div className="flex flex-wrap gap-1.5">
                 {product.badges?.map((b) => (
