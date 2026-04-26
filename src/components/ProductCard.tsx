@@ -43,7 +43,7 @@ export function ProductCard({ product, featured = false }: { product: Product; f
             src={logo}
             alt=""
             aria-hidden
-            className="absolute bottom-2 right-2 h-9 w-auto opacity-90 drop-shadow-md"
+            className="absolute bottom-2 right-2 h-10 w-auto"
           />
         </div>
 
