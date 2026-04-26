@@ -1,8 +1,10 @@
 export const BUSINESS = {
   name: "Adam Nimco",
-  tagline: "Premium Local Snack Brand",
-  phones: ["03243187567", "03341923235"],
-  whatsapp: "923243187567", // primary WA number, intl format without +
+  tagline: "Premium Local Snack Brand — Since 1939",
+  since: "1939",
+  phones: ["+923243187567", "+923341923235"],
+  whatsapp: "923243187567", // primary WhatsApp number, intl format without +
+  facebook: "https://www.facebook.com/share/1AyBJtcfdz/",
   address:
     "Shop No 14, Bhai Jee Wala Building, Near Bori Bazar, Opp Saddar City Center, Dr Dawood Pota Road, Saddar",
   mapLink: "https://share.google/qk2OtOX3Ze5ShksWN",
