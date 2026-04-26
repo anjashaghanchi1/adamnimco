@@ -38,7 +38,19 @@ export function Navbar() {
       }`}
     >
       <div className="container mx-auto px-3 lg:px-6">
-        <div className="flex items-center justify-between gap-3 h-16 lg:h-20">
+        <div className="relative flex items-center justify-between gap-3 h-16 lg:h-20">
+          {/* Centered brand title (mobile only — desktop shows nav links here) */}
+          <Link
+            to="/"
+            className="md:hidden absolute left-1/2 -translate-x-1/2 pointer-events-auto"
+            onClick={() => setOpen(false)}
+            aria-label="Adam Nimco home"
+          >
+            <span className="font-display text-lg sm:text-xl font-extrabold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent tracking-tight">
+              Adam Nimco
+            </span>
+          </Link>
+
           <Link
             to="/"
             className="flex items-center gap-2.5 shrink-0 flex-row-reverse group"
@@ -56,7 +68,7 @@ export function Navbar() {
                 />
               </div>
             </div>
-            <span className="flex flex-col leading-none items-end text-right">
+            <span className="hidden md:flex flex-col leading-none items-end text-right">
               <span className="font-display text-sm sm:text-base lg:text-lg font-extrabold text-primary">
                 Adam Nimco
               </span>
