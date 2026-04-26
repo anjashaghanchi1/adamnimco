@@ -7,16 +7,23 @@ export const Route = createFileRoute("/special")({
   head: () => ({
     meta: [
       { title: "Special Items — Adam Nimco | Premium Picks" },
-      { name: "description", content: "Our most loved premium specials — Bhail Puri, Special Nimco and more. Made fresh daily." },
+      {
+        name: "description",
+        content:
+          "Our most loved premium specials — Punjabi Nimco, Shahi Nimco, Khatta Meetha & more. Made fresh daily.",
+      },
       { property: "og:title", content: "Special Items — Adam Nimco" },
-      { property: "og:description", content: "Premium snack picks, hand-prepared every morning." },
+      {
+        property: "og:description",
+        content: "Premium snack picks, hand-prepared every morning since 1939.",
+      },
     ],
   }),
   component: SpecialPage,
 });
 
 function SpecialPage() {
-  const specials = PRODUCTS.filter((p) => p.special);
+  const specials = PRODUCTS.filter((p) => p.special || p.category === "special");
 
   return (
     <section className="container mx-auto px-4 lg:px-6 py-12 lg:py-16">
@@ -28,12 +35,11 @@ function SpecialPage() {
           Premium <span className="text-primary">Specials</span>
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Our most popular, premium-grade picks — hand-prepared every morning with the finest
-          ingredients.
+          Our most popular, premium-grade picks — hand-prepared every morning since 1939.
         </p>
       </div>
 
-      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {specials.map((p) => (
           <ProductCard key={p.slug} product={p} />
         ))}

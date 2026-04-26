@@ -1,6 +1,6 @@
 import { Phone, MessageCircle } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/adam-badge.png";
 import { Button } from "@/components/ui/button";
 import { telLink, waLink, BUSINESS } from "@/lib/contact";
 import type { Product } from "@/lib/products";
