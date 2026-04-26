@@ -63,11 +63,11 @@ function HomePage() {
                 Three generations of premium nimco, bhail puri, chips, peanuts & sweets — hand
                 made every morning at our Saddar shop.
               </p>
-              <div className="mt-7 flex flex-wrap gap-3 justify-center lg:justify-start animate-fade-up">
+              <div className="mt-7 grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:justify-center lg:justify-start animate-fade-up">
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-bold shadow-glow"
+                  className="rounded-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-bold shadow-glow w-full sm:w-auto"
                 >
                   <a href={waLink("Hi Adam Nimco, I'd like to place an order.")}>
                     <ShoppingBag className="size-5" /> Order Now
@@ -77,7 +77,7 @@ function HomePage() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="rounded-full bg-white/10 border-white/40 text-white hover:bg-white hover:text-foreground font-bold backdrop-blur"
+                  className="rounded-full bg-white/10 border-white/40 text-white hover:bg-white hover:text-foreground font-bold backdrop-blur w-full sm:w-auto"
                 >
                   <a href={telLink(BUSINESS.phones[0])}>
                     <Phone className="size-5" /> Call Now
