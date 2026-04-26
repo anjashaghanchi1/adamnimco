@@ -41,7 +41,7 @@ export function Navbar() {
         <div className="flex items-center justify-between gap-3 h-16 lg:h-20">
           <Link
             to="/"
-            className="flex items-center gap-2 shrink-0"
+            className="flex items-center gap-2 shrink-0 flex-row-reverse"
             onClick={() => setOpen(false)}
           >
             <img
@@ -51,7 +51,7 @@ export function Navbar() {
               height={72}
               className="h-12 lg:h-14 w-auto object-contain"
             />
-            <span className="hidden sm:flex flex-col leading-none">
+            <span className="hidden sm:flex flex-col leading-none items-end text-right">
               <span className="font-display text-base lg:text-lg font-extrabold text-primary">
                 Adam Nimco
               </span>
