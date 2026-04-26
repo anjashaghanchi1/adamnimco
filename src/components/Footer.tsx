@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, MessageCircle, MapPin } from "lucide-react";
-import logo from "@/assets/logo.png";
+import { Phone, MessageCircle, MapPin, Facebook } from "lucide-react";
+import logo from "@/assets/adam-logo.png";
 import { BUSINESS, telLink, waLink } from "@/lib/contact";
 
 export function Footer() {
@@ -8,19 +8,58 @@ export function Footer() {
     <footer className="mt-24 border-t border-border bg-secondary/40">
       <div className="container mx-auto px-4 lg:px-6 py-12 grid gap-10 md:grid-cols-3">
         <div>
-          <img src={logo} alt="Adam Nimco" width={140} height={48} className="h-12 w-auto object-contain" loading="lazy" />
+          <div className="flex items-center gap-3">
+            <img
+              src={logo}
+              alt="Adam Nimco"
+              width={56}
+              height={72}
+              className="h-14 w-auto object-contain"
+              loading="lazy"
+            />
+            <div className="leading-tight">
+              <p className="font-display text-lg font-extrabold text-primary">Adam Nimco</p>
+              <p className="text-[10px] font-bold tracking-widest text-muted-foreground">
+                SINCE 1939
+              </p>
+            </div>
+          </div>
           <p className="mt-3 text-sm text-muted-foreground max-w-xs">
             Fresh nimco, snacks & sweets — handcrafted daily at our Saddar shop.
           </p>
+          <a
+            href={BUSINESS.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 px-3 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground text-sm font-semibold transition-colors"
+          >
+            <Facebook className="size-4" /> Follow on Facebook
+          </a>
         </div>
 
         <div>
           <h4 className="font-semibold mb-3">Explore</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/" className="text-muted-foreground hover:text-primary">Home</Link></li>
-            <li><Link to="/special" className="text-muted-foreground hover:text-primary">Special Items</Link></li>
-            <li><Link to="/menu" className="text-muted-foreground hover:text-primary">Menu</Link></li>
-            <li><Link to="/contact" className="text-muted-foreground hover:text-primary">Contact</Link></li>
+            <li>
+              <Link to="/" className="text-muted-foreground hover:text-primary">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/special" className="text-muted-foreground hover:text-primary">
+                Special Items
+              </Link>
+            </li>
+            <li>
+              <Link to="/menu" className="text-muted-foreground hover:text-primary">
+                Full Menu
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="text-muted-foreground hover:text-primary">
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -29,13 +68,19 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             {BUSINESS.phones.map((p) => (
               <li key={p}>
-                <a href={telLink(p)} className="inline-flex items-center gap-2 hover:text-primary">
+                <a
+                  href={telLink(p)}
+                  className="inline-flex items-center gap-2 hover:text-primary"
+                >
                   <Phone className="size-4" /> {p}
                 </a>
               </li>
             ))}
             <li>
-              <a href={waLink("Hi Adam Nimco!")} className="inline-flex items-center gap-2 hover:text-primary">
+              <a
+                href={waLink("Hi Adam Nimco!")}
+                className="inline-flex items-center gap-2 hover:text-primary"
+              >
                 <MessageCircle className="size-4" /> WhatsApp Order
               </a>
             </li>
@@ -47,7 +92,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} {BUSINESS.name}. Crafted with ❤️ in Karachi.
+        © {new Date().getFullYear()} {BUSINESS.name} — Since 1939. Crafted with ❤️ in Karachi.
       </div>
     </footer>
   );
