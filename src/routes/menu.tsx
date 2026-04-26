@@ -1,26 +1,29 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { z } from "zod";
-import { zodValidator } from "@tanstack/zod-adapter";
 import { ProductCard } from "@/components/ProductCard";
 import { CATEGORIES, PRODUCTS, type CategoryKey } from "@/lib/products";
 
-const catSchema = z.object({
-  cat: z
-    .enum([
-      "all",
-      "bhail-puri",
-      "special",
-      "regular",
-      "chips",
-      "peanuts",
-      "papri",
-      "sweets",
-    ])
-    .catch("all"),
-});
+const VALID_CATS = [
+  "all",
+  "bhail-puri",
+  "special",
+  "regular",
+  "chips",
+  "peanuts",
+  "papri",
+  "sweets",
+] as const;
+
+type CatSearch = { cat: (typeof VALID_CATS)[number] };
 
 export const Route = createFileRoute("/menu")({
-  validateSearch: zodValidator(catSchema),
+  validateSearch: (search: Record<string, unknown>): CatSearch => {
+    const cat = search.cat as string;
+    return {
+      cat: (VALID_CATS as readonly string[]).includes(cat)
+        ? (cat as CatSearch["cat"])
+        : "all",
+    };
+  },
   head: () => ({
     meta: [
       { title: "Menu — Adam Nimco | Fresh Nimco, Snacks, Chips & Sweets" },
