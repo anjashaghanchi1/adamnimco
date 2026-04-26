@@ -51,7 +51,7 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/menu" className="text-muted-foreground hover:text-primary">
+              <Link to="/menu" search={{ cat: "all" }} className="text-muted-foreground hover:text-primary">
                 Full Menu
               </Link>
             </li>
