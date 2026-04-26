@@ -91,7 +91,7 @@ function HomePage() {
                 alt="Adam Nimco logo since 1939"
                 width={420}
                 height={420}
-                className="h-56 md:h-80 lg:h-[26rem] w-auto object-contain drop-shadow-2xl"
+                className="h-40 md:h-56 lg:h-72 w-auto object-contain drop-shadow-2xl"
               />
             </div>
           </div>
