@@ -41,21 +41,26 @@ export function Navbar() {
         <div className="flex items-center justify-between gap-3 h-16 lg:h-20">
           <Link
             to="/"
-            className="flex items-center gap-2 shrink-0 flex-row-reverse"
+            className="flex items-center gap-2.5 shrink-0 flex-row-reverse group"
             onClick={() => setOpen(false)}
           >
-            <img
-              src={logo}
-              alt="Adam Nimco logo"
-              width={56}
-              height={72}
-              className="h-12 lg:h-14 w-auto object-contain"
-            />
-            <span className="hidden sm:flex flex-col leading-none items-end text-right">
-              <span className="font-display text-base lg:text-lg font-extrabold text-primary">
+            <div className="relative">
+              <div className="absolute inset-0 -m-1 bg-gradient-to-br from-accent/40 to-primary/30 blur-md rounded-full opacity-80 group-hover:opacity-100 transition-opacity" aria-hidden />
+              <div className="relative rounded-full bg-gradient-to-br from-white to-amber-50 ring-2 ring-accent/50 shadow-md p-1.5">
+                <img
+                  src={logo}
+                  alt="Adam Nimco logo"
+                  width={56}
+                  height={56}
+                  className="h-9 lg:h-11 w-9 lg:w-11 object-contain rounded-full"
+                />
+              </div>
+            </div>
+            <span className="flex flex-col leading-none items-end text-right">
+              <span className="font-display text-sm sm:text-base lg:text-lg font-extrabold text-primary">
                 Adam Nimco
               </span>
-              <span className="text-[10px] lg:text-xs font-semibold tracking-widest text-accent-foreground/70">
+              <span className="text-[9px] sm:text-[10px] lg:text-xs font-bold tracking-[0.2em] text-accent-foreground/70">
                 SINCE 1939
               </span>
             </span>
