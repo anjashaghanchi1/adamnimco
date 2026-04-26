@@ -48,19 +48,8 @@ function HomePage() {
           <div className="absolute inset-0 bg-gradient-hero" />
         </div>
         <div className="relative container mx-auto px-4 lg:px-6 py-16 md:py-24 lg:py-32">
-          <div className="grid lg:grid-cols-[auto_1fr] items-center gap-8 lg:gap-12">
-            <div className="flex justify-center lg:justify-start animate-pop-in">
-              <div className="bg-white rounded-3xl p-6 md:p-8 shadow-2xl ring-1 ring-black/5">
-                <img
-                  src={logo}
-                  alt="Adam Nimco logo since 1939"
-                  width={320}
-                  height={420}
-                  className="h-48 md:h-64 lg:h-72 w-auto object-contain"
-                />
-              </div>
-            </div>
-            <div className="text-white text-center lg:text-left">
+          <div className="grid lg:grid-cols-[1fr_auto] items-center gap-8 lg:gap-12">
+            <div className="text-white text-center lg:text-left order-2 lg:order-1">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent text-accent-foreground text-xs font-bold mb-4 animate-pop-in">
                 <Award className="size-3.5" /> SINCE 1939 • SADDAR, KARACHI
               </span>
@@ -95,6 +84,15 @@ function HomePage() {
                   </a>
                 </Button>
               </div>
+            </div>
+            <div className="flex justify-center lg:justify-end animate-pop-in order-1 lg:order-2">
+              <img
+                src={logo}
+                alt="Adam Nimco logo since 1939"
+                width={320}
+                height={420}
+                className="h-48 md:h-64 lg:h-80 w-auto object-contain drop-shadow-2xl"
+              />
             </div>
           </div>
         </div>
