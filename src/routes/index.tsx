@@ -86,13 +86,21 @@ function HomePage() {
               </div>
             </div>
             <div className="flex justify-center lg:justify-end animate-pop-in order-1 lg:order-2">
-              <img
-                src={logo}
-                alt="Adam Nimco logo since 1939"
-                width={320}
-                height={420}
-                className="h-48 md:h-64 lg:h-80 w-auto object-contain drop-shadow-2xl"
-              />
+              <div className="relative">
+                {/* Outer warm glow */}
+                <div className="absolute inset-0 -m-8 bg-accent/30 blur-3xl rounded-full" aria-hidden />
+                {/* Frosted glass badge */}
+                <div className="relative rounded-full bg-white/10 backdrop-blur-md ring-1 ring-white/20 shadow-2xl p-6 md:p-8 lg:p-10 ring-offset-4 ring-offset-transparent">
+                  <div className="absolute inset-0 rounded-full ring-2 ring-accent/40 -m-1.5" aria-hidden />
+                  <img
+                    src={logo}
+                    alt="Adam Nimco logo since 1939"
+                    width={420}
+                    height={420}
+                    className="relative h-64 md:h-80 lg:h-[26rem] w-auto object-contain drop-shadow-2xl"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
