@@ -2,8 +2,42 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { CartCheckout } from "@/components/CartCheckout";
+import fullLogo from "@/assets/adam-logo.png";
+import { BUSINESS } from "@/lib/contact";
+import { CartProvider } from "@/lib/cart";
 
 import appCss from "../styles.css?url";
+
+const SITE_URL = "https://adamnimco.com";
+const SITE_TITLE = "Adam Nimco — Fresh Nimco, Snacks & Sweets in Saddar Karachi";
+const SITE_DESCRIPTION =
+  "Since 1939, Adam Nimco serves fresh nimco, bhail puri, papri, peanuts and sweets in Saddar Karachi. Order quickly on WhatsApp.";
+const OG_IMAGE = `${SITE_URL}${fullLogo}`;
+const LOCAL_BUSINESS_JSON_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FoodEstablishment",
+  name: BUSINESS.name,
+  image: OG_IMAGE,
+  telephone: BUSINESS.phones,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: BUSINESS.address,
+    addressLocality: "Karachi",
+    addressCountry: "PK",
+  },
+  sameAs: [BUSINESS.facebook],
+  url: SITE_URL,
+  servesCuisine: "Snacks",
+  areaServed: "Karachi",
+  priceRange: "$$",
+});
+const WEBSITE_JSON_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: BUSINESS.name,
+  url: SITE_URL,
+});
 
 function NotFoundComponent() {
   return (
@@ -32,25 +66,32 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Adam Nimco — Fresh Nimco, Snacks & Sweets in Saddar Karachi" },
+      { title: SITE_TITLE },
       {
         name: "description",
-        content:
-          "Adam Nimco — premium fresh nimco, bhail puri, papri, peanuts & sweets. Order on WhatsApp or visit our Saddar shop. Made fresh daily.",
+        content: SITE_DESCRIPTION,
       },
+      { name: "keywords", content: "Adam Nimco, nimco Karachi, bhail puri Karachi, snacks Saddar, sweets Karachi, papri, peanuts, fresh nimco" },
+      { name: "author", content: BUSINESS.name },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
       { name: "theme-color", content: "#d63838" },
-      { property: "og:title", content: "Adam Nimco — Fresh Nimco, Snacks & Sweets in Saddar Karachi" },
-      { property: "og:description", content: "A premium local snack brand website for Adam Nimco, driving WhatsApp orders and phone calls." },
+      { property: "og:site_name", content: BUSINESS.name },
+      { property: "og:locale", content: "en_PK" },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Adam Nimco — Fresh Nimco, Snacks & Sweets in Saddar Karachi" },
-      { name: "description", content: "A premium local snack brand website for Adam Nimco, driving WhatsApp orders and phone calls." },
-      { name: "twitter:description", content: "A premium local snack brand website for Adam Nimco, driving WhatsApp orders and phone calls." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/14252b2c-449b-40d6-9e63-ac7cc4ff3960/id-preview-d9d43b57--e12b53a7-fc34-43f9-b429-1995e4d0d957.lovable.app-1777215588024.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/14252b2c-449b-40d6-9e63-ac7cc4ff3960/id-preview-d9d43b57--e12b53a7-fc34-43f9-b429-1995e4d0d957.lovable.app-1777215588024.png" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: SITE_URL },
+      { rel: "icon", href: fullLogo, type: "image/png" },
+      { rel: "apple-touch-icon", href: fullLogo },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -69,6 +110,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script type="application/ld+json">{LOCAL_BUSINESS_JSON_LD}</script>
+        <script type="application/ld+json">{WEBSITE_JSON_LD}</script>
       </head>
       <body>
         {children}
@@ -80,13 +123,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <Footer />
-      <FloatingWhatsApp />
-    </div>
+    <CartProvider>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+        <CartCheckout />
+        <FloatingWhatsApp />
+      </div>
+    </CartProvider>
   );
 }

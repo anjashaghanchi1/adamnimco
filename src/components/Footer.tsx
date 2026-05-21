@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, MessageCircle, MapPin, Facebook } from "lucide-react";
+import { Phone, MapPin, Facebook } from "lucide-react";
 import logo from "@/assets/adam-logo.png";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { BUSINESS, telLink, waLink } from "@/lib/contact";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-border bg-secondary/40">
+    <footer className="mt-24 border-t border-border bg-gradient-to-br from-secondary/80 via-secondary/55 to-primary/10">
       <div className="container mx-auto px-4 lg:px-6 py-12 grid gap-10 md:grid-cols-3">
         <div>
           <div className="flex items-center gap-3">
@@ -31,7 +32,7 @@ export function Footer() {
             href={BUSINESS.facebook}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-4 px-3 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground text-sm font-semibold transition-colors"
+            className="inline-flex items-center gap-2 mt-4 px-3 py-2 rounded-full bg-[#1877F2] text-white hover:bg-[#166FE5] text-sm font-semibold transition-colors shadow-soft"
           >
             <Facebook className="size-4" /> Follow on Facebook
           </a>
@@ -60,6 +61,11 @@ export function Footer() {
                 Contact
               </Link>
             </li>
+            <li>
+              <Link to="/about" className="text-muted-foreground hover:text-primary">
+                About
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -81,7 +87,7 @@ export function Footer() {
                 href={waLink("Hi Adam Nimco!")}
                 className="inline-flex items-center gap-2 hover:text-primary"
               >
-                <MessageCircle className="size-4" /> WhatsApp Order
+                <WhatsAppIcon className="size-6" /> WhatsApp Order
               </a>
             </li>
             <li className="flex gap-2">
@@ -92,7 +98,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} {BUSINESS.name} — Since 1939. Crafted with ❤️ in Karachi.
+        © {new Date().getFullYear()} {BUSINESS.name} — Since 1939. Crafted with <a href="https://techodix.site/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">TECHODIX</a> in Karachi.
       </div>
     </footer>
   );

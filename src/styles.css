@@ -52,6 +52,7 @@
   --animate-fade-up: fade-up 0.5s ease-out;
   --animate-pop-in: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   --animate-float: float 6s ease-in-out infinite;
+  --animate-whatsapp-bounce: whatsapp-bounce 1.7s ease-in-out infinite;
 }
 
 @keyframes marquee {
@@ -69,6 +70,13 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+@keyframes whatsapp-bounce {
+  0%, 100% { transform: scale(1); }
+  20% { transform: scale(1.08) rotate(-3deg); }
+  35% { transform: scale(1.14) rotate(3deg); }
+  50% { transform: scale(1.06) rotate(-2deg); }
+  65% { transform: scale(1.12) rotate(2deg); }
 }
 
 :root {
@@ -153,4 +161,10 @@
   .text-balance { text-wrap: balance; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .animate-whatsapp-bounce { animation: var(--animate-whatsapp-bounce); transform-origin: center; }
+  .animate-float-slow {
+    animation: var(--animate-float);
+    will-change: transform;
+    transform: translateZ(0);
+  }
 }

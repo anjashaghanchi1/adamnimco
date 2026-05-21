@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Minus, Plus, MessageCircle, Phone } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Minus, Plus, Phone } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -8,40 +8,63 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import type { Product } from "@/lib/products";
 import { BUSINESS, telLink, waLink } from "@/lib/contact";
+import logo from "@/assets/adam-badge.png";
+import { useCart } from "@/lib/cart";
 
 export function ProductModal({
   product,
   open,
   onOpenChange,
+  onAddedToCart,
 }: {
   product: Product;
   open: boolean;
   onOpenChange: (v: boolean) => void;
+  onAddedToCart?: () => void;
 }) {
   const [variantIdx, setVariantIdx] = useState(0);
   const [qty, setQty] = useState(1);
+  const { addItem } = useCart();
 
   const variant = product.variants[variantIdx];
   const total = useMemo(() => variant.price * qty, [variant, qty]);
 
   const message = `Hi Adam Nimco, I'd like to order:\n\n• ${product.name} — ${variant.label} × ${qty}\n• Total: Rs ${total}\n\nPlease confirm availability. Thank you!`;
 
+  useEffect(() => {
+    if (open) {
+      setVariantIdx(0);
+      setQty(1);
+    }
+  }, [open, product.slug]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0 max-h-[92vh] overflow-y-auto sm:rounded-lg">
-        <div className="grid md:grid-cols-2">
-          <div className="aspect-[4/3] sm:aspect-square bg-muted overflow-hidden max-h-[28vh] md:max-h-none">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover"
-              width={800}
-              height={800}
-            />
+      <DialogContent className="w-[95vw] max-w-2xl p-0 gap-0 max-h-[min(88vh,680px)] overflow-y-auto rounded-2xl border border-border shadow-card">
+        <div className="grid md:grid-cols-2 h-full">
+          <div className="bg-gradient-warm overflow-hidden md:border-r border-border">
+            <div className="w-full h-full flex items-center justify-center p-3 sm:p-4">
+              <div className="relative w-full h-full rounded-xl border border-border/70 bg-card/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-3">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  width={1200}
+                  height={1200}
+                  className="max-w-full max-h-[22vh] sm:max-h-[26vh] md:max-h-[300px] object-contain"
+                />
+                <img
+                  src={logo}
+                  alt=""
+                  aria-hidden
+                  className="absolute bottom-2 right-2 h-9 w-auto opacity-95"
+                />
+              </div>
+            </div>
           </div>
-          <div className="p-4 md:p-6 flex flex-col">
+          <div className="p-3 md:p-4 flex flex-col min-h-0">
             <DialogHeader className="text-left space-y-2">
               <div className="flex flex-wrap gap-1.5">
                 {product.badges?.map((b) => (
@@ -54,11 +77,17 @@ export function ProductModal({
               <DialogDescription className="text-sm">{product.description}</DialogDescription>
             </DialogHeader>
 
-            <div className="mt-5">
+            {product.slug === "bhail-puri-liquid" && (
+              <p className="mt-2 text-xs sm:text-sm text-muted-foreground font-semibold">
+                Note: For delivery outside Karachi, dry chutney is also available on request.
+              </p>
+            )}
+
+            <div className="mt-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
                 Choose size
               </p>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {product.variants.map((v, i) => (
                   <button
                     key={v.label}
@@ -76,7 +105,7 @@ export function ProductModal({
               </div>
             </div>
 
-            <div className="mt-4 flex items-center justify-between">
+            <div className="mt-3 flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Quantity
               </p>
@@ -99,21 +128,34 @@ export function ProductModal({
               </div>
             </div>
 
-            <div className="mt-5 p-3 rounded-xl bg-gradient-warm border border-border flex items-baseline justify-between">
+            <div className="mt-3 p-2.5 rounded-xl bg-gradient-warm border border-border flex items-baseline justify-between">
               <span className="text-sm font-medium">Total</span>
               <span className="font-display text-2xl font-extrabold text-primary">Rs {total}</span>
             </div>
 
-            <div className="mt-4 flex gap-2">
+            <div className="mt-auto pt-3 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 grid grid-cols-[1fr_1fr_auto] gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full rounded-full font-semibold h-9 text-xs sm:text-sm"
+                onClick={() => {
+                  addItem({ product, variant, quantity: qty });
+                  onAddedToCart?.();
+                  onOpenChange(false);
+                }}
+              >
+                Add to Cart
+              </Button>
               <Button
                 asChild
-                className="flex-1 rounded-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-semibold shadow-soft"
+                variant="outline"
+                className="w-full rounded-full bg-background/80 hover:bg-background font-semibold shadow-soft h-9 text-xs sm:text-sm"
               >
                 <a href={waLink(message)} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="size-4" /> Order on WhatsApp
+                  <WhatsAppIcon className="size-5 sm:size-6 animate-whatsapp-bounce" /> WhatsApp Order
                 </a>
               </Button>
-              <Button asChild variant="outline" className="rounded-full">
+              <Button asChild variant="outline" className="rounded-full h-9 w-9 p-0 shrink-0" size="icon">
                 <a href={telLink(BUSINESS.phones[0])} aria-label="Call to order">
                   <Phone className="size-4" />
                 </a>

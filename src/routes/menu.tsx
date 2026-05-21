@@ -1,6 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
-import { CATEGORIES, PRODUCTS, type CategoryKey } from "@/lib/products";
+import { ProductModal } from "@/components/ProductModal";
+import { Button } from "@/components/ui/button";
+import { CATEGORIES, PRODUCTS, type CategoryKey, type Product } from "@/lib/products";
+
+const MENU_URL = "https://adamnimco.com/menu";
 
 const VALID_CATS = [
   "all",
@@ -9,6 +14,7 @@ const VALID_CATS = [
   "regular",
   "chips",
   "peanuts",
+  "bondi",
   "papri",
   "sweets",
 ] as const;
@@ -37,7 +43,9 @@ export const Route = createFileRoute("/menu")({
         property: "og:description",
         content: "Full menu of fresh snacks & sweets — order on WhatsApp.",
       },
+      { property: "og:url", content: MENU_URL },
     ],
+    links: [{ rel: "canonical", href: MENU_URL }],
   }),
   component: MenuPage,
 });
@@ -109,6 +117,11 @@ function MenuPage() {
                   <h2 className="font-display text-2xl md:text-3xl font-extrabold mt-1">
                     {g.label}
                   </h2>
+                  {g.key === "bhail-puri" && (
+                    <p className="mt-2 text-sm text-muted-foreground max-w-2xl font-semibold">
+                      Note: For delivery outside Karachi, dry chutney is also available on request.
+                    </p>
+                  )}
                 </div>
                 <Link
                   to="/menu"
@@ -118,21 +131,135 @@ function MenuPage() {
                   View all →
                 </Link>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                {g.products.map((p) => (
-                  <ProductCard key={p.slug} product={p} />
-                ))}
-              </div>
+              {g.key === "bhail-puri" || (g.key === "sweets" && g.products.some((p) => p.slug === "gulab-jamun")) ? (
+                <div className="relative -mx-4 px-4">
+                  <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2">
+                    {g.products.map((p) => (
+                      <FeaturedSlide
+                        key={p.slug}
+                        product={p}
+                        label={g.label}
+                        fullWidth={g.key === "bhail-puri" || g.key === "sweets"}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                  {g.products.map((p) => (
+                    <ProductCard key={p.slug} product={p} />
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
       ) : (
-        <div className="mt-10 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-          {items.map((p) => (
-            <ProductCard key={p.slug} product={p} />
-          ))}
-        </div>
+        <>
+          {cat === "bhail-puri" && (
+            <p className="mt-6 text-sm text-muted-foreground max-w-2xl mx-auto text-center font-semibold">
+              Note: For delivery outside Karachi, dry chutney is also available on request.
+            </p>
+          )}
+          {cat === "bhail-puri" || cat === "sweets" ? (
+            <div className="mt-10 flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2 -mx-4 px-4">
+              {items.map((p) => (
+                <FeaturedSlide
+                  key={p.slug}
+                  product={p}
+                  label={cat === "bhail-puri" ? "Bhail Puri" : "Sweets"}
+                  fullWidth={cat === "bhail-puri" || cat === "sweets"}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              {items.map((p) => (
+                <ProductCard key={p.slug} product={p} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </section>
+  );
+}
+
+function FeaturedSlide({
+  product,
+  label,
+  fullWidth = false,
+}: {
+  product: Product;
+  label: string;
+  fullWidth?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const startingPrice = product.variants[0]?.price ?? 0;
+
+  return (
+    <div
+      className={`snap-start shrink-0 ${
+        fullWidth ? "w-full" : "w-[92%] sm:w-[70%] lg:w-[56%] xl:w-[46%]"
+      }`}
+    >
+      <div
+        className={`overflow-hidden bg-card ${
+          fullWidth
+            ? "rounded-2xl border border-border shadow-soft"
+            : "rounded-3xl border border-border shadow-glow"
+        }`}
+      >
+        <button
+          type="button"
+          className="relative w-full text-left"
+          onClick={() => setOpen(true)}
+        >
+          <div className="relative h-[52vh] sm:h-[58vh] lg:h-[62vh]">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              width={1400}
+              height={900}
+            />
+            <div className="absolute inset-0 bg-gradient-hero" />
+            <div className="relative h-full flex items-end p-5 sm:p-7">
+              <div className="max-w-xl">
+                <p className="text-white/85 text-sm font-semibold uppercase tracking-wider">
+                  {label}
+                </p>
+                <h3 className="mt-1 font-display text-3xl sm:text-4xl font-extrabold text-white">
+                  {product.name}
+                </h3>
+                <p className="mt-2 text-white/85 text-sm sm:text-base line-clamp-2">
+                  {product.short}
+                </p>
+
+                <div className="mt-4 flex items-center gap-3 flex-wrap">
+                  <span className="inline-flex items-center rounded-full bg-white/10 text-white px-3 py-1 text-sm font-semibold backdrop-blur">
+                    From Rs {startingPrice}
+                  </span>
+                  <Button
+                    type="button"
+                    className="rounded-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-bold text-sm sm:text-base h-10 px-5 shadow-soft"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setOpen(true);
+                    }}
+                  >
+                    Order Now!
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <ProductModal product={product} open={open} onOpenChange={setOpen} />
+    </div>
   );
 }

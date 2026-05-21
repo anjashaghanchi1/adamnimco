@@ -1,7 +1,8 @@
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/adam-badge.png";
 import { Button } from "@/components/ui/button";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { telLink, waLink, BUSINESS } from "@/lib/contact";
 import type { Product } from "@/lib/products";
 import { ProductModal } from "./ProductModal";
@@ -13,7 +14,7 @@ export function ProductCard({ product, featured = false }: { product: Product; f
   return (
     <>
       <article
-        className={`group relative bg-card rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-glow transition-all duration-300 hover:-translate-y-1 cursor-pointer ${
+        className={`group relative bg-card rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-glow transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col h-full min-w-0 ${
           featured ? "min-w-[280px] md:min-w-0" : ""
         }`}
         onClick={() => setOpen(true)}
@@ -47,30 +48,32 @@ export function ProductCard({ product, featured = false }: { product: Product; f
           />
         </div>
 
-        <div className="p-4 space-y-3">
-          <div>
-            <h3 className="font-display font-bold text-lg leading-tight">{product.name}</h3>
-            <p className="text-sm text-muted-foreground line-clamp-1">{product.short}</p>
+        <div className="p-4 space-y-3 flex flex-col flex-1">
+          <div className="space-y-1.5 min-w-0">
+            <h3 className="font-display font-bold text-base sm:text-lg leading-tight line-clamp-2 min-h-[2.5rem] sm:min-h-[3.2rem]">
+              {product.name}
+            </h3>
+            <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.5rem]">{product.short}</p>
           </div>
 
-          <div className="flex items-baseline justify-between">
+          <div className="flex items-baseline justify-between gap-3">
             <span className="text-xs text-muted-foreground">From</span>
-            <span className="font-display text-xl font-extrabold text-primary">
+            <span className="font-display text-lg sm:text-xl font-extrabold text-primary whitespace-nowrap">
               Rs {startingPrice}
             </span>
           </div>
 
-          <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+          <div className="grid grid-cols-[1fr_auto] gap-2 mt-auto" onClick={(e) => e.stopPropagation()}>
             <Button
               size="sm"
-              className="flex-1 rounded-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-semibold"
+              className="w-full rounded-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-bold h-10 text-sm whitespace-nowrap"
               onClick={() => setOpen(true)}
             >
-              <MessageCircle className="size-4" /> Order
+              <WhatsAppIcon className="size-6 animate-whatsapp-bounce" /> Order Now!
             </Button>
-            <Button asChild size="sm" variant="outline" className="rounded-full">
+            <Button asChild size="sm" variant="outline" className="rounded-full h-10 px-4">
               <a href={telLink(BUSINESS.phones[0])} aria-label={`Call to order ${product.name}`}>
-                <Phone className="size-4" />
+                <Phone className="size-4" /> Call
               </a>
             </Button>
           </div>

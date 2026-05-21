@@ -3,6 +3,8 @@ import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Sparkles } from "lucide-react";
 
+const SPECIAL_URL = "https://adamnimco.com/special";
+
 export const Route = createFileRoute("/special")({
   head: () => ({
     meta: [
@@ -17,7 +19,9 @@ export const Route = createFileRoute("/special")({
         property: "og:description",
         content: "Premium snack picks, hand-prepared every morning since 1939.",
       },
+      { property: "og:url", content: SPECIAL_URL },
     ],
+    links: [{ rel: "canonical", href: SPECIAL_URL }],
   }),
   component: SpecialPage,
 });

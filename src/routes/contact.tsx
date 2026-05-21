@@ -1,12 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { Phone, MessageCircle, MapPin, Navigation } from "lucide-react";
+import { Phone, MapPin, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { BUSINESS, telLink, waLink } from "@/lib/contact";
+
+const CONTACT_URL = "https://adamnimco.com/contact";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -15,7 +18,9 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Visit us at Saddar, Karachi or order via call/WhatsApp. Phone: 03243187567, 03341923235." },
       { property: "og:title", content: "Contact Adam Nimco" },
       { property: "og:description", content: "Visit, call or WhatsApp us to place your order." },
+      { property: "og:url", content: CONTACT_URL },
     ],
+    links: [{ rel: "canonical", href: CONTACT_URL }],
   }),
   component: ContactPage,
 });
@@ -63,55 +68,49 @@ function ContactPage() {
 
       <div className="mt-10 grid lg:grid-cols-2 gap-8">
         {/* Quick contact */}
-        <div className="space-y-4">
-          <div className="rounded-2xl bg-card border border-border shadow-card p-6">
-            <h2 className="font-display text-xl font-bold mb-4">Quick Contact</h2>
-            <div className="space-y-3">
-              {BUSINESS.phones.map((p) => (
-                <div key={p} className="flex items-center justify-between gap-2 p-3 rounded-xl bg-muted/60">
-                  <a href={telLink(p)} className="flex items-center gap-3 font-semibold">
-                    <span className="size-10 rounded-full bg-primary text-primary-foreground grid place-items-center">
-                      <Phone className="size-5" />
-                    </span>
-                    {p}
-                  </a>
+        <div className="rounded-2xl bg-card border border-border shadow-card p-6">
+          <h2 className="font-display text-xl font-bold mb-4">Quick Contact</h2>
+          <div className="space-y-3">
+            {BUSINESS.phones.map((p) => (
+              <div key={p} className="flex items-center justify-between gap-3 p-3 rounded-xl bg-muted/60 flex-wrap sm:flex-nowrap">
+                <a href={telLink(p)} className="flex items-center gap-3 font-semibold">
+                  <span className="size-10 rounded-full bg-primary text-primary-foreground grid place-items-center">
+                    <Phone className="size-5" />
+                  </span>
+                  {p}
+                </a>
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="rounded-full border-whatsapp/40 text-whatsapp hover:bg-whatsapp hover:text-whatsapp-foreground text-xs sm:text-sm font-semibold px-3"
+                >
                   <a
                     href={waLink(`Hi Adam Nimco, I'd like to order. (Calling from ${p})`)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="size-10 rounded-full bg-whatsapp text-whatsapp-foreground grid place-items-center hover:scale-110 transition-transform"
-                    aria-label="WhatsApp"
+                    aria-label={`Click to WhatsApp ${p}`}
                   >
-                    <MessageCircle className="size-5" />
+                    <WhatsAppIcon className="size-5" /> Click to WhatsApp
                   </a>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5 p-4 rounded-xl bg-gradient-warm border border-border">
-              <div className="flex items-start gap-3">
-                <MapPin className="size-5 text-primary mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="font-bold">Visit Our Shop</h3>
-                  <p className="text-sm text-muted-foreground mt-1">{BUSINESS.address}</p>
-                  <Button asChild size="sm" className="mt-3 rounded-full">
-                    <a href={BUSINESS.mapLink} target="_blank" rel="noopener noreferrer">
-                      <Navigation className="size-4" /> Get Directions
-                    </a>
-                  </Button>
-                </div>
+                </Button>
               </div>
-            </div>
+            ))}
           </div>
 
-          <div className="rounded-2xl overflow-hidden border border-border shadow-card aspect-[4/3]">
-            <iframe
-              title="Adam Nimco shop location"
-              src={BUSINESS.mapEmbed}
-              className="w-full h-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          <div className="mt-5 p-4 rounded-xl bg-gradient-warm border border-border">
+            <div className="flex items-start gap-3">
+              <MapPin className="size-5 text-primary mt-0.5 shrink-0" />
+              <div>
+                <h3 className="font-bold">Visit Our Shop</h3>
+                <p className="text-sm text-muted-foreground mt-1">{BUSINESS.address}</p>
+                <Button asChild size="sm" className="mt-3 rounded-full">
+                  <a href={BUSINESS.mapLink} target="_blank" rel="noopener noreferrer">
+                    <Navigation className="size-4" /> Get Directions
+                  </a>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -147,11 +146,21 @@ function ContactPage() {
             <Button
               type="submit"
               size="lg"
-              className="w-full rounded-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-bold shadow-soft"
+              className="w-full rounded-full border border-whatsapp/40 bg-transparent text-whatsapp hover:bg-whatsapp hover:text-whatsapp-foreground font-bold shadow-soft"
             >
-              <MessageCircle className="size-5" /> Send via WhatsApp
+              <WhatsAppIcon className="size-9" /> Send via WhatsApp
             </Button>
           </form>
+        </div>
+
+        <div className="rounded-2xl overflow-hidden border border-border shadow-card aspect-[16/9] md:aspect-[16/7] lg:col-span-2">
+          <iframe
+            title="Adam Nimco shop location"
+            src={BUSINESS.mapEmbed}
+            className="w-full h-full"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
       </div>
     </section>
