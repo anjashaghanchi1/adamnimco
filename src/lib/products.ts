@@ -36,7 +36,7 @@ import chipsCrinkleMasala from "@/assets/products/chips-crinkle-masala.jpg";
 import chipsFinger from "@/assets/products/chips-finger.jpg";
 import chipsFingerMasala from "@/assets/products/chips-finger-masala.jpg";
 import chipsFingerPepper from "@/assets/products/chips-finger-pepper.jpg";
-import chipsHyderabadi from "@/assets/products/chips-hyderabadi.jpeg";
+import chipsHyderabadi from "@/assets/products/chips-hyderabadi.jpg";
 import topPops from "@/assets/products/top-pops.jpg";
 import topPopsMasala from "@/assets/products/top-pops-masala.jpg";
 
@@ -573,7 +573,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "papri-coin",
-    name: "Coin Papri Salted",
+    name: "Coin Papri",
     short: "Small round crackers",
     description: "Coin-sized round crispy crackers — bite-sized and addictive.",
     image: papriCoin,
